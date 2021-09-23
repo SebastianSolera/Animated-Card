@@ -27,6 +27,11 @@ body {
   max-width: 35ch;
   border-radius: 0.5rem;
   overflow: hidden; /* para poder ver el border-radius de abajo*/
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 
 .card-content {
@@ -37,8 +42,26 @@ body {
     hsl(20 0% 0% /0.3) 15%,
     hsl(0 0% 0% /1)
   );
+  transform: translateY(70%);
+  transition: transform 500ms ease;
+}
+/*
+  Siempre que se pueda es mas recomendable 
+  usar 'transform' en vez de 'position'
+  */
+/* 👀  ATENCION a esa sintaxis*/
+.card-content > *:not(.card-title) {
+  opacity: 0;
+  transition: opacity 500ms linear;
 }
 
+.card:hover .card-content {
+  transform: translateY(0%);
+}
+
+.card:hover .card-content > *:not(.card-title) {
+  opacity: 1;
+}
 .card-title {
   position: relative;
   width: max-content; /* 👀 ojo con eso*/
@@ -52,6 +75,13 @@ body {
   bottom: 0;
   position: absolute;
   background: var(--clr-accent-400);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms ease;
+}
+
+.card:hover .card-title::after {
+  transform: scaleX(1);
 }
 
 .button {
