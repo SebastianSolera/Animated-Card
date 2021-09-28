@@ -30,7 +30,8 @@ body {
   transition: transform 0.3s ease;
 }
 
-.card:hover {
+.card:hover,
+.card:focus-within {
   transform: scale(1.05);
 }
 
@@ -43,28 +44,13 @@ body {
     hsl(0 0% 0% /1)
   );
   transform: translateY(70%);
-  transition: transform 300ms ease; /*velocidad de subida y de bajada*/
-  transition-delay: 400ms; /*Delay despues del Hover*/
 }
 /*
   Siempre que se pueda es mas recomendable 
   usar 'transform' en vez de 'position'
   */
 /* 👀  ATENCION a esa sintaxis*/
-.card-content > *:not(.card-title) {
-  opacity: 0;
-  transition: opacity 500ms linear;
-}
 
-.card:hover .card-content {
-  transform: translateY(0%);
-  transition-delay: 200ms; /*cuando se hace el hover*/
-}
-
-.card:hover .card-content > *:not(.card-title) {
-  opacity: 1;
-  transition-delay: 500ms; /* delay del texto*/
-}
 .card-title {
   position: relative;
   width: max-content; /* 👀 ojo con eso*/
@@ -78,13 +64,44 @@ body {
   bottom: 0;
   position: absolute;
   background: var(--clr-accent-400);
-  transform: scaleX(0);
   transform-origin: left;
   transition: transform 500ms ease;
 }
 
 .card:hover .card-title::after {
   transform: scaleX(1);
+}
+
+@media (hover) {
+  .card-content {
+    transition: transform 300ms ease; /*velocidad de subida y de bajada*/
+    transition-delay: 400ms; /*Delay despues del Hover*/
+  }
+
+  .card:hover .card-content,
+  .card:focus-within .card-content {
+    transform: translateY(0%);
+    transition-delay: 400ms; /*cuando se hace el hover*/
+  }
+
+  .car:focus-within .card-content {
+    transition-duration: 0ms;
+  }
+
+  .card-content > *:not(.card-title) {
+    opacity: 0;
+    transition: opacity 500ms linear;
+  }
+
+  .card:hover .card-content > *:not(.card-title),
+  .card:focus-within .card-content > *:not(.card-title) {
+    opacity: 1;
+    transition-delay: 500ms; /* delay del texto*/
+  }
+
+  .card-title::after {
+    transform: scaleX(0);
+  }
 }
 
 .button {
